@@ -7,32 +7,43 @@ dotenv.config();
 const server = express();
 
 const db = mariadb.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    port: Number(process.env.DB_PORT),
-})
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: Number(process.env.DB_PORT),
+});
 
 server.use(cors());
 server.use(express.json());
 
+server.post("/login", async (req, res) => {
+  const connection = await db.getConnection();
+  const username = req.body.username;
+  const password = req.body.password;
+  connection
+    .query("SELECT users.username FROM users WHERE username=? AND password=?", [username, password])
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
 
 server.post("/register", async (req, res) => {
-    const connection = await db.getConnection();
-    const username = req.body.username;
-    const password = req.body.password;
-    
-    connection.query(
-        "INSERT INTO users VALUES(?,?)", [username, password]
-    ).then(() => {
-        res.send("success");
-    }).catch((err) => {
-       res.send(err.name)
-    })
+  const connection = await db.getConnection();
+  const username = req.body.username;
+  const password = req.body.password;
 
-})
+  connection
+    .query("INSERT INTO users VALUES(?,?)", [username, password])
+    .then(() => {
+      res.send("success");
+    })
+    .catch((err) => {
+      res.send(err.name);
+    });
+});
 
 server.listen(3001, () => {
-    console.log("Listening for stuff on port 3001");
-})
+  console.log("Listening for stuff on port 3001");
+});
