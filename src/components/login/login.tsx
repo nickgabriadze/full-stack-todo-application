@@ -2,6 +2,7 @@ import Head from "../head";
 import loginStyle from "./login.module.css";
 import { useState } from "react";
 import axios from "axios";
+import {sha256} from "js-sha256";
 
 export const Login = () => {
 
@@ -10,7 +11,7 @@ export const Login = () => {
     const [error, setError] = useState<string>("")
   
   const loginUser = (username: string, password: string) => {
-    axios.post("http://localhost:3001/login", {username: username, password: password}).then(
+    axios.post("http://localhost:3001/login", {username: username, password: sha256(password)}).then(
       (res:any) => console.log(res.data)
     ).catch(err => {
       setError(err)

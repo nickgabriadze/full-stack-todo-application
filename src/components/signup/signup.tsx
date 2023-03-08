@@ -2,6 +2,7 @@ import { useState } from "react";
 import signupStyles from "./signup.module.css";
 import Head from "../head";
 import axios from "axios";
+import {sha256} from "js-sha256";
 import { checkForm } from "./checker";
 
 const responseDict: { [key: string]: string } = {
@@ -22,7 +23,7 @@ export const Signup = () => {
     axios
       .post("http://localhost:3001/register", {
         username: username,
-        password: password,
+        password: sha256(password),
       })
       .then((res) => setCallResult(res.data))
       .catch((err: string) => {
