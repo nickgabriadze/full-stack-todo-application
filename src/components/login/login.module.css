@@ -1,0 +1,114 @@
+.login-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 2rem;
+    color: #b5a9cc;
+}
+
+
+.username-input{
+    color: white;
+    display: flex;
+    flex-direction: column-reverse;
+   
+}
+
+.username, .username:focus{
+    border: none;
+    background-color: inherit;
+    color: rgb(140, 135, 135);
+    border-bottom: 1px solid #b5a9cc;
+    outline: none;
+    font-size: x-large;
+    padding-bottom: 5px;
+}
+
+.username-label{
+    position: relative;
+    color: #b5a9cc;
+    font-size: larger;
+    pointer-events: none;
+    top: 30px;
+}
+
+.username:focus + .username-label{
+    top: 0px;
+    font-size: medium;
+    transition: all 0.5s linear;
+}
+
+.username:not(:focus) + .username-label{
+    top: 30px;
+    font-size: larger;
+    transition: all 0.5s linear;
+}
+.username:not(:focus),
+.username:valid + .username-label{
+    top: 0;
+}
+
+
+
+
+
+
+
+.password-input{
+
+    display: flex;
+    flex-direction: column-reverse;
+   
+}
+
+.password, .password:focus{
+    border: none;
+    background-color: inherit;
+    color: rgb(140, 135, 135);
+    border-bottom: 1px solid #b5a9cc;
+    outline: none;
+    font-size: x-large;
+    padding-bottom: 5px;
+}
+
+.password-label{
+    position: relative;
+    color: #b5a9cc;
+    font-size: larger;
+    pointer-events: none;
+    top: 30px;
+}
+
+.password:focus + .password-label{
+    top: 0px;
+    font-size: medium;
+    transition: all 0.5s linear;
+}
+
+.password:not(:focus) + .password-label{
+    top: 30px;
+    font-size: larger;
+    transition: all 0.5s linear;
+}
+.password:not(:focus),
+.password:valid + .password-label{
+    top: 0;
+}
+
+
+
+.login-btn{
+    border: none;
+    border-top:1px solid #b5a9cc;
+    outline: none;
+    background-color: inherit;
+    color:#b5a9cc;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.login-btn:active{
+    transform: scale(0.9);
+    transition: all 0.3s linear;
+}
