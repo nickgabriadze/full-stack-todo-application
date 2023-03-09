@@ -24,9 +24,9 @@ server.post("/login", async (req, res) => {
   connection
     .query("SELECT users.username FROM users WHERE username=? AND password=?", [username, password])
     .then((result) => {
-      console.log(result);
+      
       res.send(result);
-    });
+    }).catch((error) => { console.log(error)});
 });
 
 server.post("/register", async (req, res) => {

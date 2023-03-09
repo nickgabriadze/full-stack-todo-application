@@ -3,24 +3,33 @@ import loginStyle from "./login.module.css";
 import { useState } from "react";
 import axios from "axios";
 import {sha256} from "js-sha256";
+import formChecker from "./login-checker";
+
+
 
 export const Login = () => {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("")
+    const [receivedData, setReceivedData] = useState<[]>([]);
+    const [errorMessageForUser, setErrorMessageForUser] = useState<string>("");
+    
+    const loginUser = (username: string, password: string) => {
+      axios.post("http://localhost:3001/login", {username: username, password: sha256(password)}).then(
+        (res:any) => setReceivedData(res.data)
+      ).catch(err => {
+        setError(err)
+      })
+    }
   
-  const loginUser = (username: string, password: string) => {
-    axios.post("http://localhost:3001/login", {username: username, password: sha256(password)}).then(
-      (res:any) => console.log(res.data)
-    ).catch(err => {
-      setError(err)
-    })
-  }
 
     const handleSubmit = (e:any) => {
       e.preventDefault();
+
       loginUser(username, password);
+      const validPass = formChecker(username, password, receivedData);
+      return validPass;
     }
 
   return (
@@ -49,11 +58,18 @@ export const Login = () => {
                 required></input>
                 <label className={loginStyle['password-label']}>Password</label>
             </div>
-
+            <p>{errorMessageForUser}</p>
             <button type={"submit"} 
             onClick={(e) => {
-                handleSubmit(e);
+                const handledSubmit = handleSubmit(e);
+                if( handledSubmit === true) {
+                  setErrorMessageForUser('TRUEEEE')
+                }else{  
+               setErrorMessageForUser(handledSubmit.toString());
+                
             }}
+          }
+            
             className={loginStyle['login-btn']}>Continue</button>
 
       </div>

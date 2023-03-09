@@ -3,7 +3,8 @@ import signupStyles from "./signup.module.css";
 import Head from "../head";
 import axios from "axios";
 import {sha256} from "js-sha256";
-import { checkForm } from "./checker";
+import { checkForm } from "./signup-checker";
+
 
 const responseDict: { [key: string]: string } = {
   success:
@@ -40,7 +41,7 @@ export const Signup = () => {
     if (callResult === "success") {
       setTimeout(() => {
         window.location.href = "/";
-      }, 1000);
+      }, 2500);
     }
 
     return (
