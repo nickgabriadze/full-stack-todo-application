@@ -40,7 +40,7 @@ export const Signup = () => {
   const Popup = () => {
     if (callResult === "success") {
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = `/account/${username}`;
       }, 2500);
     }
 

@@ -11,7 +11,7 @@ export const Home = () => {
           </div>
 
           <div className={homeStyles["log-in"]}>
-            <Link to={"/account/log-in"}>
+            <Link to={"/account/login"}>
               <h3>LOG IN</h3>
             </Link>
           </div>
@@ -21,7 +21,7 @@ export const Home = () => {
           </div>
 
           <div className={homeStyles["sign-up"]}>
-            <Link to={"/account/sign-up"}>
+            <Link to={"/account/signup"}>
               <h3>SIGN UP</h3>
             </Link>
           </div>

@@ -6,6 +6,7 @@ import "./css/global.css";
 import { Login } from "./components/login/login";
 import Signup from "./components/signup/signup";
 import { Provider } from "react-redux/es/exports";
+import Personal from "./components/personal/personal";
 import store from "./store/store";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -14,8 +15,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/account/log-in" element={<Login />} />
-          <Route path="/account/sign-up" element={<Signup />} />
+          <Route path="/account/login" element={<Login />} />
+          <Route path="/account/signup" element={<Signup />} />
+          <Route path="/account/:username" element={<Personal />} />
         </Routes>
       </BrowserRouter>
     </Provider>

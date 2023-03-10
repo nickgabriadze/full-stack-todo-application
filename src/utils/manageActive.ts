@@ -1,6 +1,10 @@
-export const StayLoggedIn = (username:string, stayLoggedIn: boolean) => {
+export const stayLoggedIn = (username:string, stayLoggedIn: boolean) => {
 
     window.localStorage.setItem('username', username)
-    window.localStorage.setItem('stayLoggedIn', stayLoggedIn ? 'true' : 'false');
+    window.localStorage.setItem('stayLoggedIn', 'true');
 }
 
+export const logOut = (username: string) => {
+    window.localStorage.removeItem(username);
+    window.localStorage.removeItem('stayLoggedIn');
+}
