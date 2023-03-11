@@ -2,6 +2,9 @@ import homeStyles from "./home.module.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
+
+  const whoIsLoggedIn = window.localStorage.getItem("username");
+  
   return (
     <>
       <div className={homeStyles["home-wrapper"]}>
@@ -12,7 +15,7 @@ export const Home = () => {
 
           <div className={homeStyles["log-in"]}>
             <Link to={"/account/login"}>
-              <h3>LOG IN</h3>
+              <h3>{`${whoIsLoggedIn?.trim().length != 0}` ? `Logged In As ${whoIsLoggedIn}`:`LOG IN`}</h3>
             </Link>
           </div>
 

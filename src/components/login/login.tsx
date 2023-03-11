@@ -1,54 +1,91 @@
 import Head from "../head";
 import loginStyle from "./login.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { sha256 } from "js-sha256";
-import formChecker from "./login-checker";
+import formChecker, { checkReceivedData } from "./login-checker";
 import { useAppDispatch } from "../../store/hooks";
 import {
   setStayLoggedIn,
   setTodoerUsername,
 } from "../../store/slices/userSlice";
+import { stayLoggedIn } from "../../utils/manageActive";
+
+
+const PopUp = () => {
+  return (
+    <div className={loginStyle["pop-up-wrapper"]}>
+      <h3>
+        You've logged in successfully and will be redirected to your own page in
+        a few seconds
+      </h3>
+    </div>
+  );
+};
 
 export const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [receivedData, setReceivedData] = useState<[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessageForUser, setErrorMessageForUser] = useState<string>("");
-  const [stayLoggedInColor, setStayLoggedInColor] = useState<boolean>(false);
+  const [stayLoggedInColor, setStayLoggedInColor] = useState<string>('false');
+  const [popUp, setPopUp] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
-  const loginUser = (username: string, password: string) => {
-    axios
-      .post("http://localhost:3001/login", {
-        username: username,
-        password: sha256(password),
-      })
-      .then((res: any) => setReceivedData(res.data))
-      .catch((err) => {
-        setError(err);
-      });
+  const loginUser = async (username: string, password: string) => {
+    setIsLoading(true);
+    try {
+      const response = await  axios
+        .post("http://localhost:3001/login", {
+          username: username,
+          password: sha256(password),
+        })
+
+        const result = response.data;
+      
+        setReceivedData(result);
+        
+    } catch (err) {
+      console.log(err);
+    }finally{
+      setIsLoading(false)
+     
+    }
   };
+
+  useEffect(() => {
+    if(receivedData.length != 0){
+      const finalCheck = checkReceivedData(username, receivedData);
+      if(finalCheck === true) {
+        stayLoggedIn(username, stayLoggedInColor);
+        dispatch(setTodoerUsername(username));
+        dispatch(setStayLoggedIn(stayLoggedInColor));
+        setPopUp(true);
+        handleRoutingAfterLogIn();
+        
+      }else{
+        setErrorMessageForUser(finalCheck);
+      }
+    }
+  }, [receivedData])
+
 
   const handleRoutingAfterLogIn = () => {
-   
-  };
-
-  const handleSubmit = (e: any) => {
-   e.preventDefault();
-
-    loginUser(username, password);
-    const validPass = formChecker(username, password, receivedData);
-    return validPass;
+    setTimeout(() => {
+      window.location.href = `/account/${username}`;
+    }, 2500);
   };
 
   return (
     <>
       <Head title={"Log In"} />
 
-      <div className={loginStyle["login-wrapper"]}>
+      <div
+        className={loginStyle["login-wrapper"]}
+        style={popUp ? { filter: `blur(2px)` } : { filter: `blur(0px)` }}
+      >
         <div className={loginStyle["login-header"]}>
           <h1>LOG IN FORM</h1>
         </div>
@@ -66,7 +103,7 @@ export const Login = () => {
 
         <div className={loginStyle["password-input"]}>
           <input
-            type="password"
+            type="text"
             className={loginStyle["password"]}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -78,11 +115,12 @@ export const Login = () => {
 
         <div
           onClick={() => {
-            setStayLoggedInColor(!stayLoggedInColor);
+            setStayLoggedInColor(stayLoggedInColor === 'true' ? 'false' : 'true');
           }}
           className={loginStyle["stay-loggedin"]}
         >
-          <p
+          <button
+            type="submit"
             style={{
               backgroundColor: `${
                 stayLoggedInColor ? "rgb(64, 64, 100)" : "#b5a9cc"
@@ -90,27 +128,25 @@ export const Login = () => {
             }}
           >
             Stay logged in
-          </p>
+          </button>
         </div>
 
         <button
           type={"submit"}
-          onClick={(e) => {
-            const handledSubmit = handleSubmit(e);
-            if (handledSubmit === true) {
-              dispatch(setTodoerUsername(username));
-              dispatch(setStayLoggedIn(stayLoggedInColor));
-
-              handleRoutingAfterLogIn();
-            } else {
-              setErrorMessageForUser(handledSubmit.toString());
+          onClick={() => {
+            const validForm = formChecker(username, password);
+            if(validForm === true){
+              loginUser(username, password);
+            }else{
+              setErrorMessageForUser(validForm.toString());
             }
           }}
           className={loginStyle["login-btn"]}
         >
-          Continue
+          {isLoading ? "Loading...": `Continue`}
         </button>
       </div>
+      {popUp ? <PopUp /> : ""}
     </>
   );
 };

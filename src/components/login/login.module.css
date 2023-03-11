@@ -6,6 +6,7 @@
     flex-direction: column;
     gap: 2rem;
     color: #b5a9cc;
+    
 }
 
 .login-wrapper p {
@@ -130,8 +131,8 @@
     gap: 10px;
 }
 
-.stay-loggedin p{
-        
+.stay-loggedin button{
+        border: none;
         background-color: inherit;
         color: black;
         padding: 10px;
@@ -142,6 +143,18 @@
 
 }
 
-.stay-loggedin p:focus{
-    border: 1px solid white;
+.pop-up-wrapper{
+
+    position: absolute;
+    z-index: 1;
+    color: #b5a9cc;
+    background-color: black;
+    top: 50%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    border: 1px solid #b5a9cc;
+    padding: 40px;
+    border-radius: 7px;
 }
