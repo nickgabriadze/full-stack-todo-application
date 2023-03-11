@@ -1,7 +1,7 @@
-export const stayLoggedIn = (username:string, stayLoggedIn: boolean) => {
-
+export const stayLoggedIn = (username:string, stayLoggedIn: string) => {
+  
     window.localStorage.setItem('username', username)
-    window.localStorage.setItem('stayLoggedIn', 'true');
+    window.localStorage.setItem('stayLoggedIn', stayLoggedIn);
 }
 
 export const logOut = (username: string) => {
