@@ -10,45 +10,58 @@ import {
   setTodoerUsername,
 } from "../../store/slices/userSlice";
 
+const loginUser = async (username: string, password: string) => {
+  return axios
+    .post("http://localhost:3001/login", {
+      username: username,
+      password: sha256(password),
+    })
+    .then((res) => res.data)
+  }
+
+const PopUp = () => {
+  return (<div className={loginStyle["pop-up-wrapper"]}>
+    <h3>
+      You've logged in successfully and will be redirected to your own page in a
+      few seconds
+    </h3>
+  </div>);
+};
+
 export const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [receivedData, setReceivedData] = useState<[]>([]);
   const [errorMessageForUser, setErrorMessageForUser] = useState<string>("");
   const [stayLoggedInColor, setStayLoggedInColor] = useState<boolean>(false);
+  const [popUp, setPopUp] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
-  const loginUser = (username: string, password: string) => {
-    axios
-      .post("http://localhost:3001/login", {
-        username: username,
-        password: sha256(password),
-      })
-      .then((res: any) => setReceivedData(res.data))
-      .catch((err) => {
-        setError(err);
-      });
-  };
+  
+
 
   const handleRoutingAfterLogIn = () => {
-   
+    setTimeout(() => {
+      window.location.href = `/account/${username}`;
+    }, 2500);
   };
 
   const handleSubmit = (e: any) => {
-   e.preventDefault();
+    e.preventDefault();
 
-    loginUser(username, password);
+    loginUser(username, password).then((res) => setReceivedData(res));
+
     const validPass = formChecker(username, password, receivedData);
     return validPass;
+    
   };
 
   return (
     <>
       <Head title={"Log In"} />
 
-      <div className={loginStyle["login-wrapper"]}>
+      <div className={loginStyle["login-wrapper"]} style={popUp ? { filter: `blur(2px)` } : { filter: `blur(0px)` }}>
         <div className={loginStyle["login-header"]}>
           <h1>LOG IN FORM</h1>
         </div>
@@ -66,7 +79,7 @@ export const Login = () => {
 
         <div className={loginStyle["password-input"]}>
           <input
-            type="password"
+            type="text"
             className={loginStyle["password"]}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -82,7 +95,8 @@ export const Login = () => {
           }}
           className={loginStyle["stay-loggedin"]}
         >
-          <p
+          <button
+            type="submit"
             style={{
               backgroundColor: `${
                 stayLoggedInColor ? "rgb(64, 64, 100)" : "#b5a9cc"
@@ -90,7 +104,7 @@ export const Login = () => {
             }}
           >
             Stay logged in
-          </p>
+          </button>
         </div>
 
         <button
@@ -98,9 +112,10 @@ export const Login = () => {
           onClick={(e) => {
             const handledSubmit = handleSubmit(e);
             if (handledSubmit === true) {
+            
               dispatch(setTodoerUsername(username));
               dispatch(setStayLoggedIn(stayLoggedInColor));
-
+              setPopUp(true);
               handleRoutingAfterLogIn();
             } else {
               setErrorMessageForUser(handledSubmit.toString());
@@ -111,6 +126,7 @@ export const Login = () => {
           Continue
         </button>
       </div>
+      {popUp ? <PopUp /> : ''}
     </>
   );
 };
