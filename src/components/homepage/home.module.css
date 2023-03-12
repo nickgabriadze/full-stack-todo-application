@@ -4,12 +4,14 @@
     justify-content: center;
     align-items: center;
     color:#c3a2ff;
-    gap: 8rem;
     min-height: 100vh;
 }
 
 
 .navigation{
+    position: fixed;
+    top:0;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -42,6 +44,7 @@ a {
     align-items: center;
     flex-direction: column;
     gap: 2rem;
+    min-height: 90vh;
     
 }
 .welcome-section{

@@ -61,10 +61,9 @@
 
 
 .empty-todos{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ min-height: 80vh;
   color:#745d9f;
-
 }

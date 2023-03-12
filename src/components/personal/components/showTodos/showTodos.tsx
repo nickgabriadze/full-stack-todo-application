@@ -34,7 +34,7 @@ export const ShowTodos = ({ forUser }: any) => {
     }
   }, [forUser]);
 
-  if (todos.length === 0) {
+  if (todos.length !== 0) {
     return <h1 className={showTodosStyle['empty-todos']}>You don't have any todo tasks, feel free to add them!</h1>;
   }
 
