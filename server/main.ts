@@ -27,7 +27,6 @@ server.get("/api/get/todos", async (req, res) => {
       .query("SELECT todos.ID, todos.title, todos.checked, todos.category, todos.date FROM todos WHERE usernameFK =?", [username])
       .then((result) => {
         res.send(result);
-        console.log(result)
       })
       .catch((err) => {
         console.log(err);
