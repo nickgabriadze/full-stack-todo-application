@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import retrieveTodos from "./api";
 import showTodosStyle from "./showTodos.module.css";
+import { getTimeDifference } from "./timeDiff";
 
 interface Todo {
   ID: number;
@@ -34,17 +35,17 @@ export const ShowTodos = ({ forUser }: any) => {
     }
   }, [forUser]);
 
-  if (todos.length !== 0) {
-    return <h1 className={showTodosStyle['empty-todos']}>You don't have any todo tasks, feel free to add them!</h1>;
+  if (todos.length === 0) {
+    return (
+      <h1 className={showTodosStyle["empty-todos"]}>
+        You don't have any todo tasks, feel free to add them!
+      </h1>
+    );
   }
-
 
   return (
     <>
-      <div
-        className={showTodosStyle["todos-wrapper"]}
-       
-      >
+      <div className={showTodosStyle["todos-wrapper"]}>
         {todos.map((todo) => {
           return (
             <div key={todo.ID} className={showTodosStyle["todo"]}>
@@ -68,14 +69,15 @@ export const ShowTodos = ({ forUser }: any) => {
                     <h4>Not yet</h4>
                   ) : (
                     <div className={showTodosStyle["complete-icon"]}>
-                      <img
-                        src="/checked-icon.svg"
-                        width={48}
-                        height={48}
-                      />
+                      <img src="/checked-icon.svg" width={48} height={48} />
                     </div>
                   )}
                 </div>
+              </div>
+
+              <div className={showTodosStyle["added"]}>
+                <h2>Added</h2>
+                <p>{getTimeDifference(new Date(todo.date))}</p>
               </div>
 
               <div
@@ -89,7 +91,6 @@ export const ShowTodos = ({ forUser }: any) => {
           );
         })}
       </div>
-      
     </>
   );
 };
