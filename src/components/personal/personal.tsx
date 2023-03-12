@@ -3,6 +3,7 @@ import { useAppSelector } from "../../store/hooks";
 import axios from "axios";
 import { useState } from "react";
 import personalStyle from "./persona.module.css";
+import AddTodos from "./components/addTodo/addTodos";
 
 const Personal = () => {
   const username = useParams().username;
@@ -12,6 +13,7 @@ const Personal = () => {
     2: false,
     3: false,
   });
+
 
   return (
     <>
@@ -82,6 +84,10 @@ const Personal = () => {
             </div>
           </div>
         </nav>
+
+
+        {active[2] ? <AddTodos forUser={username}/> : ''}
+
       </div>
     </>
   );

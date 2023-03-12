@@ -4,18 +4,19 @@ import { Link } from "react-router-dom";
 export const Home = () => {
 
   const whoIsLoggedIn = window.localStorage.getItem("username");
+  const conditionOfLoggedIn = whoIsLoggedIn?.trim().length !==0;
+
+  /* MUST USE SESSION STORAGE TO TRACK IF THE USER CLOSED THE TAB WHEN StayLOGGEDIN was left unchecked*/
   
   return (
     <>
       <div className={homeStyles["home-wrapper"]}>
         <nav className={homeStyles["navigation"]}>
-          <div className={homeStyles["personal-space"]}>
-            <h3>Personal Space</h3>
-          </div>
+          
 
           <div className={homeStyles["log-in"]}>
-            <Link to={"/account/login"}>
-              <h3>{`${whoIsLoggedIn?.trim().length != 0}` ? `Logged In As ${whoIsLoggedIn}`:`LOG IN`}</h3>
+            <Link to={conditionOfLoggedIn ? `/account/${whoIsLoggedIn}`:"/account/login"}>
+              <h3>{conditionOfLoggedIn ? `Logged In As ${whoIsLoggedIn}`:`LOG IN`}</h3>
             </Link>
           </div>
 
@@ -29,9 +30,6 @@ export const Home = () => {
             </Link>
           </div>
 
-          <div className={homeStyles["about"]}>
-            <h3>ABOUT</h3>
-          </div>
         </nav>
 
         <div className={homeStyles["middle-section"]}>

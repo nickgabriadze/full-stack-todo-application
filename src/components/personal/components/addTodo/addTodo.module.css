@@ -1,0 +1,60 @@
+.addtodo-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px;
+    min-height: 70vh;
+    color: aliceblue;
+    gap: 5rem;
+}
+
+.addtodo-wrapper input{
+    border: none;
+    background-color: inherit;
+    border-bottom: 1px solid #b5a9cc;
+    font-size: 1.5rem;
+    color:#b5a9cc;
+    height: fit-content;
+    width: fit-content;
+    padding-bottom: 5px;
+}
+
+.addtodo-wrapper input:focus{
+    outline: none;
+}
+
+.title input::placeholder, .category input::placeholder{
+    font-size: 1rem;
+}
+
+.title h3, .category h3{
+    color: #745d9f;
+}
+
+.create-todo button{
+    border: none;
+    background-color: inherit;
+    color: #745d9f;
+    border-radius: 7px;
+    border: 1px solid #b5a9cc;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.create-todo:active{
+    transform: scale(0.95);
+    transition: all 0.2s ease-in-out;
+    background-color: #745d9f;
+}
+
+.create-todo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    color:#b5a9cc;
+    text-align: center;
+}

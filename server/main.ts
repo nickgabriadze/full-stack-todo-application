@@ -17,6 +17,31 @@ const db = mariadb.createPool({
 server.use(cors());
 server.use(express.json());
 
+
+
+
+server.post('/api/create/todo', async (req, res) => {
+    const connection = await db.getConnection();  
+    const title = req.body.title;
+    const category = req.body.category;
+    const checked = req.body.checked;
+    const date = req.body.date;
+    const username = req.body.username;
+
+    connection.query('INSERT INTO todos (title, category, checked, date, usernameFK) VALUES (?,?,?,?,?)', [
+      title, category, checked, date, username
+    ]).then((result) => {
+      res.sendStatus(result.warningStatus === 0 ? 200 : 500);
+      console.log(result);
+    }).catch((err) => {
+      console.log(err);
+    })
+
+});
+
+
+
+
 server.post("/login", async (req, res) => {
   const connection = await db.getConnection();
   const username = req.body.username;

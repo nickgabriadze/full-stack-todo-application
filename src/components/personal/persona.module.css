@@ -1,3 +1,9 @@
+.persona-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .personal-wrapper nav {
   width: 100%;
   height: fit-content;
