@@ -22,6 +22,11 @@
 
 .welcome-user {
   font-size: clamp(2rem, 2.5vh, 3rem);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .welcome-user p {
   font-size: 1rem;

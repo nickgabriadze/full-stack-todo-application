@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import personalStyle from "./persona.module.css";
 import AddTodos from "./components/addTodo/addTodos";
+import ShowTodos from "./components/showTodos/showTodos";
 
 const Personal = () => {
   const username = useParams().username;
@@ -13,7 +14,6 @@ const Personal = () => {
     2: false,
     3: false,
   });
-
 
   return (
     <>
@@ -85,9 +85,10 @@ const Personal = () => {
           </div>
         </nav>
 
-
-        {active[2] ? <AddTodos forUser={username}/> : ''}
-
+        <div>
+          {(active[1] && <ShowTodos forUser={username} />) ||
+            (active[2] && <AddTodos forUser={username} />)}
+        </div>
       </div>
     </>
   );
