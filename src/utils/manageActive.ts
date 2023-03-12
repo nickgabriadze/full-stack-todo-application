@@ -1,10 +1,12 @@
-export const stayLoggedIn = (username:string, stayLoggedIn: string) => {
-  
-    window.localStorage.setItem('username', username)
-    window.localStorage.setItem('stayLoggedIn', stayLoggedIn);
-}
+export const stayLoggedIn = (username: string, stayLoggedIn: string) => {
+    if(stayLoggedIn === 'true'){
+    window.localStorage.setItem("username", username);
+    window.localStorage.setItem("stayLoggedIn", stayLoggedIn);
+    window.sessionStorage.setItem("username", username);
+    }
+    
+    if(stayLoggedIn === 'false'){
+        sessionStorage.setItem("username", username);
+    }
+};
 
-export const logOut = (username: string) => {
-    window.localStorage.removeItem(username);
-    window.localStorage.removeItem('stayLoggedIn');
-}

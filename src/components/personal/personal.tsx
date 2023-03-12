@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../store/hooks";
-import axios from "axios";
 import { useState } from "react";
 import personalStyle from "./persona.module.css";
 import AddTodos from "./components/addTodo/addTodos";
 import ShowTodos from "./components/showTodos/showTodos";
+import Head from "../head";
 
 const Personal = () => {
   const username = useParams().username;
@@ -14,6 +13,27 @@ const Personal = () => {
     2: false,
     3: false,
   });
+
+  if (
+    localStorage.getItem("username") !== username && sessionStorage.getItem("username") !== username
+  ){
+    return (
+      <>
+        <Head title={`${username} not found`} />
+        <h1 className={personalStyle["not-logged-in"]}>
+          Please log in to see your personal todos
+        </h1>
+      </>
+    );
+  }
+
+  const handleLogout = () => {
+    if (wantToLogOut === 1) {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      window.location.href = "/";
+    }
+  };
 
   return (
     <>
@@ -73,6 +93,7 @@ const Personal = () => {
             <div
               onClick={() => {
                 setWantToLogOut((state) => state + 1);
+                handleLogout();
                 setTimeout(() => {
                   setWantToLogOut(0);
                 }, 2000);

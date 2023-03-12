@@ -11,7 +11,6 @@ import {
 } from "../../store/slices/userSlice";
 import { stayLoggedIn } from "../../utils/manageActive";
 
-
 const PopUp = () => {
   return (
     <div className={loginStyle["pop-up-wrapper"]}>
@@ -24,12 +23,22 @@ const PopUp = () => {
 };
 
 export const Login = () => {
+  if(localStorage.getItem("username")!== null){
+    window.location.href = `/account/${localStorage.getItem("username")}`;
+  }
+
+  if (sessionStorage.getItem("username") !== null) {
+     window.location.href = `/account/${sessionStorage.getItem("username")}`;
+  }
+
+  
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [receivedData, setReceivedData] = useState<[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessageForUser, setErrorMessageForUser] = useState<string>("");
-  const [stayLoggedInColor, setStayLoggedInColor] = useState<string>('false');
+  const [stayLoggedInColor, setStayLoggedInColor] = useState<string>("false");
   const [popUp, setPopUp] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
@@ -37,40 +46,35 @@ export const Login = () => {
   const loginUser = async (username: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await  axios
-        .post("http://localhost:3001/login", {
-          username: username,
-          password: sha256(password),
-        })
+      const response = await axios.post("http://localhost:3001/login", {
+        username: username,
+        password: sha256(password),
+      });
 
-        const result = response.data;
-      
-        setReceivedData(result);
-        
+      const result = response.data;
+
+      setReceivedData(result);
     } catch (err) {
       console.log(err);
-    }finally{
-      setIsLoading(false)
-     
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    if(receivedData.length != 0){
+    if (receivedData.length != 0) {
       const finalCheck = checkReceivedData(username, receivedData);
-      if(finalCheck === true) {
+      if (finalCheck === true) {
         stayLoggedIn(username, stayLoggedInColor);
         dispatch(setTodoerUsername(username));
         dispatch(setStayLoggedIn(stayLoggedInColor));
         setPopUp(true);
         handleRoutingAfterLogIn();
-        
-      }else{
+      } else {
         setErrorMessageForUser(finalCheck);
       }
     }
-  }, [receivedData])
-
+  }, [receivedData]);
 
   const handleRoutingAfterLogIn = () => {
     setTimeout(() => {
@@ -103,7 +107,7 @@ export const Login = () => {
 
         <div className={loginStyle["password-input"]}>
           <input
-            type="text"
+            type="password"
             className={loginStyle["password"]}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -115,17 +119,21 @@ export const Login = () => {
 
         <div
           onClick={() => {
-            setStayLoggedInColor(stayLoggedInColor === 'true' ? 'false' : 'true');
+            setStayLoggedInColor(
+              stayLoggedInColor === "true" ? "false" : "true"
+            );
           }}
           className={loginStyle["stay-loggedin"]}
         >
           <button
             type="submit"
-            style={{
-              backgroundColor: `${
-                stayLoggedInColor ? "rgb(64, 64, 100)" : "#b5a9cc"
-              }`,
-            }}
+            style={
+              stayLoggedInColor === "true"
+                ? {
+                    backgroundColor: "rgb(64, 64, 100)",
+                  }
+                : { backgroundColor: "#b5a9cc" }
+            }
           >
             Stay logged in
           </button>
@@ -135,15 +143,15 @@ export const Login = () => {
           type={"submit"}
           onClick={() => {
             const validForm = formChecker(username, password);
-            if(validForm === true){
+            if (validForm === true) {
               loginUser(username, password);
-            }else{
+            } else {
               setErrorMessageForUser(validForm.toString());
             }
           }}
           className={loginStyle["login-btn"]}
         >
-          {isLoading ? "Loading...": `Continue`}
+          {isLoading ? "Loading..." : `Continue`}
         </button>
       </div>
       {popUp ? <PopUp /> : ""}

@@ -6,7 +6,7 @@
   margin-top: 2rem;
   place-items: center;
   justify-self: center;
-  gap: 2rem;
+  gap: 1rem;
   padding: 20px;
 }
 
@@ -14,19 +14,57 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: max-content;
+  width: fit;
   color: #807ea1;
   height: fit-content;
   text-align: center;
   padding: 10px;
   border-radius: 7px;
-  background-color: #d6d6d6;
-
+  background-color: #d7d7d7;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color=#807EA1)"; /*IE 8*/
-  -moz-box-shadow: 0 0 5px 3px #807ea1; /*FF 3.5+*/
-  -webkit-box-shadow: 0 0 5px 3px #807ea1; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
-  box-shadow: 0 0 5px 3px #807ea1; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
-  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color=#807EA1); /*IE 5.5-7*/
+  -moz-box-shadow: 0 0 5px 3px #745d9f; /*FF 3.5+*/
+  -webkit-box-shadow: 0 0 5px 3px #745d9f; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+  box-shadow: 0 0 5px 3px #745d9f; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color=#745d9f); /*IE 5.5-7*/
+}
+
+.pin > img{
+  color: #745d9f;
+  transform: rotate(50deg);
+}
+
+.complete-icon{
+  margin-top: 10px;
+}
+
+.title{
+  padding: 10px;
 }
 
 
+.pop-up-wrapper{
+  position: absolute;
+  top:40%;
+  left:50%;
+  transform: translate(-50% -50%);
+  border: 1px solid #745d9f;
+  background-color: black;
+}
+
+.edit{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; 
+  cursor: pointer;
+}
+
+
+.empty-todos{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:#745d9f;
+
+}

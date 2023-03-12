@@ -1,14 +1,14 @@
+import { stayLoggedIn } from "../../utils/manageActive";
 import { useState } from "react";
 import signupStyles from "./signup.module.css";
 import Head from "../head";
 import axios from "axios";
-import {sha256} from "js-sha256";
+import { sha256 } from "js-sha256";
 import { checkForm } from "./signup-checker";
-
 
 const responseDict: { [key: string]: string } = {
   success:
-    "Hey, thanks for signing up! now you will be redirected to your homepage",
+    "Hey, thanks for signing up! now you will be redirected to sign in page",
   SqlError: "Sorry, the username you are trying to register is not available",
 };
 
@@ -19,6 +19,17 @@ export const Signup = () => {
   const [callResult, setCallResult] = useState<string>("");
   const [popUp, setPopup] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<string>("");
+
+  if (localStorage.getItem("username") !== null || sessionStorage.getItem("username") !== null)  {
+    return (
+      <>
+        <h1 className={signupStyles["loggedin-checker"]}>
+          you are currently logged in, please log out to sign up with a new
+          account
+        </h1>
+      </>
+    );
+  }
 
   const registerUser = (username: string, password: string) => {
     axios
@@ -40,7 +51,7 @@ export const Signup = () => {
   const Popup = () => {
     if (callResult === "success") {
       setTimeout(() => {
-        window.location.href = `/account/${username}`;
+        window.location.href = `/account/login`;
       }, 2500);
     }
 
@@ -126,7 +137,6 @@ export const Signup = () => {
               setPopup(true);
             } else {
               setPasswordError(checkResult || "");
-              
             }
           }}
           className={signupStyles["login-btn"]}

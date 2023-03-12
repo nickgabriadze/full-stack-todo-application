@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 export const Home = () => {
 
   const whoIsLoggedIn = window.localStorage.getItem("username");
-  const conditionOfLoggedIn = whoIsLoggedIn?.trim().length !==0;
+  const conditionOfLoggedIn = whoIsLoggedIn?.trim().length !==0 && whoIsLoggedIn !== null;
+  
+  sessionStorage.clear();
 
   /* MUST USE SESSION STORAGE TO TRACK IF THE USER CLOSED THE TAB WHEN StayLOGGEDIN was left unchecked*/
   
