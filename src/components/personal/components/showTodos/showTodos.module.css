@@ -67,3 +67,32 @@
  min-height: 80vh;
   color:#745d9f;
 }
+
+
+.mark-as-complete h3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #745d9f;
+  border-radius: 7px;
+  width:fit-content ;
+  margin: 5px auto;
+
+  cursor: pointer;
+  background-color: #bdb8c6;
+  padding: 5px;
+}
+
+
+input{
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid #807ea1;
+  font-size: 1rem;
+  text-align: center;
+  color:#745d9f;
+}
+
+input:focus{
+  outline: none;
+}
