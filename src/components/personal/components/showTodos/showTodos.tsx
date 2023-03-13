@@ -11,11 +11,22 @@ interface Todo {
   date: Date;
 }
 
+interface EditTodo {
+  title: string;
+  checked: number;
+  category: string;
+}
+
 export const ShowTodos = ({ forUser }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<string>("");
-  const [edit, setEdit] = useState<boolean>(false);
+  const [edit, setEdit] = useState<{editID: number, edit: boolean}>({editID: -1, edit: false});
+  const [editTodo, setEditTodo] = useState<EditTodo>({
+    title: '',
+    checked: 0,
+    category: ''
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -54,12 +65,12 @@ export const ShowTodos = ({ forUser }: any) => {
               </div>
               <div className={showTodosStyle["title"]}>
                 <label>Title</label>
-                <h1>{todo.title}</h1>
+                {edit.editID !== todo.ID ? <h1>{todo.title}</h1> : <input type="text" value={todo.title} onChange={(e) => setEditTodo({...editTodo, title: e.target.value })} />}
               </div>
 
               <div className={showTodosStyle["category"]}>
                 <label>Category</label>
-                <h4>{todo.category}</h4>
+                {edit.editID !== todo.ID ? <h4>{todo.category}</h4> : <input type="text" value={todo.category} onChange={(e) => setEditTodo({...editTodo, category: e.target.value })} />}
               </div>
 
               <div className={showTodosStyle["checked"]}>
@@ -82,9 +93,17 @@ export const ShowTodos = ({ forUser }: any) => {
 
               <div
                 className={showTodosStyle["edit"]}
-                onClick={() => setEdit(true)}
+               
               >
-                <h2>Edit</h2>
+                {edit.editID !== todo.ID ? <h2  onClick={(e) => setEdit({
+                  ...edit,
+                  editID: todo.ID,
+                  edit: true
+                })}>Edit</h2>: <h2 onClick={(e) => setEdit({
+                  ...edit,
+                  editID : -1,
+                  edit: false
+                })}>Update</h2>}
                 <img src="/edit-icon.svg" width={30} height={30} />
               </div>
             </div>
