@@ -103,7 +103,7 @@
 }
 
 
-input{
+.title input, .category input{
   border: none;
   background-color: inherit;
   border-bottom: 1px solid #807ea1;
