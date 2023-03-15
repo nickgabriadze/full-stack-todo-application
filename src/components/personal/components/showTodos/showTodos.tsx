@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import retrieveTodos from "./api";
+import retrieveTodos, { changeTodo } from "./api";
 import showTodosStyle from "./showTodos.module.css";
 import { getTimeDifference } from "./timeDiff";
 
-interface Todo {
+export interface Todo {
   ID: number;
   title: string;
   checked: number; //0 false, 1 true
@@ -11,11 +11,14 @@ interface Todo {
   date: Date;
 }
 
-interface EditTodo {
+export interface EditTodo {
   title: string;
-  checked: boolean;
+  checked: number;
   category: string;
 }
+
+
+
 
 export const ShowTodos = ({ forUser }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,9 +30,23 @@ export const ShowTodos = ({ forUser }: any) => {
   });
   const [editTodo, setEditTodo] = useState<EditTodo>({
     title: "",
-    checked: false,
+    checked: 0,
     category: "",
   });
+
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    try{
+      const response = await changeTodo(edit.editID, editTodo);
+    
+    }catch(e){
+      
+    }finally{
+      setIsLoading(false);
+    }
+  }
+ 
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -47,7 +64,7 @@ export const ShowTodos = ({ forUser }: any) => {
     } finally {
       setIsLoading(false);
     }
-  }, [forUser]);
+  }, [forUser, todos]);
 
   if (todos.length === 0) {
     return (
@@ -67,13 +84,13 @@ export const ShowTodos = ({ forUser }: any) => {
                 <img src="/push-pin-icon.svg" width={30} height={30} />
               </div>
               <div className={showTodosStyle["title"]}>
-                <label>Title</label>
+                <p>Title</p>
                 {edit.editID !== todo.ID ? (
-                  <h1>{todo.title}</h1>
+                  <h2>{todo.title}</h2>
                 ) : (
                   <input
                     type="text"
-                    value={todo.title}
+                    value={editTodo.title}
                     onChange={(e) =>
                       setEditTodo({ ...editTodo, title: e.target.value })
                     }
@@ -82,13 +99,13 @@ export const ShowTodos = ({ forUser }: any) => {
               </div>
 
               <div className={showTodosStyle["category"]}>
-                <label>Category</label>
+                <p>Category</p>
                 {edit.editID !== todo.ID ? (
                   <h4>{todo.category}</h4>
                 ) : (
                   <input
                     type="text"
-                    value={todo.category}
+                    value={editTodo.category}
                     onChange={(e) =>
                       setEditTodo({ ...editTodo, category: e.target.value })
                     }
@@ -114,7 +131,7 @@ export const ShowTodos = ({ forUser }: any) => {
                     onClick={() =>
                       setEditTodo({
                         ...editTodo,
-                        checked: editTodo.checked ? false : true,
+                        checked: editTodo.checked ? 0 : 1,
                       })
                     }
                   >
@@ -130,8 +147,8 @@ export const ShowTodos = ({ forUser }: any) => {
 
               <div className={showTodosStyle["edit"]}>
                 {edit.editID !== todo.ID ? (
-                  <h2
-                    onClick={(e) =>
+                  <h2 className={showTodosStyle["edit-pencil"]}
+                    onClick={() =>
                       {
                       setEdit({
                         ...edit,
@@ -143,27 +160,42 @@ export const ShowTodos = ({ forUser }: any) => {
                         ...editTodo,
                         title: todo.title,
                         category: todo.category,
-                        checked: todo.checked === 0 ? false: true
+                        checked: todo.checked === 0 ? 0: 1
                       })
                     }
                     }
                   >
                     Edit
+                    <img src="/edit-icon.svg" width={30} height={30} /> 
                   </h2>
                 ) : (
+                  <>
                   <h2
-                    onClick={(e) =>
-                      setEdit({
-                        ...edit,
-                        editID: -1,
-                        edit: false,
-                      })
-                    }
+                   onClick={() => {
+                   
+                    handleUpdate();    
+                    setEdit({
+                      ...edit, 
+                      editID: -1,
+                      edit: false
+                    })
+
+                   
+                   }}
                   >
-                    Update
+                    {isLoading ? "Loading...": 'Update'}
                   </h2>
+                  <h2 
+                   onClick={() =>
+                    setEdit({
+                      ...edit,
+                      editID: -1,
+                      edit: false,
+                    })
+                  }>Cancel</h2>
+                  </>
                 )}
-                {edit.editID !== todo.ID ? <img src="/edit-icon.svg" width={30} height={30} /> : ""}
+                
               </div>
             </div>
           );

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { EditTodo } from "./showTodos";
 
 export const retrieveTodos = async (username: string) => {
   try {
@@ -11,5 +12,20 @@ export const retrieveTodos = async (username: string) => {
     console.log(e);
   }
 };
+
+
+export const changeTodo = async (ID: number, editedTodo:EditTodo) => {
+    try{
+      return axios.put("http://localhost:3001/api/put/todos/change", {
+        ID: ID, 
+        title: editedTodo.title, 
+        category: editedTodo.category, 
+        checked: editedTodo.checked
+      });
+    }
+    catch (error) {
+      console.log(error);
+    }
+}
 
 export default retrieveTodos;

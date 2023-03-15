@@ -9,7 +9,7 @@ const Personal = () => {
   const username = useParams().username;
   const [wantToLogOut, setWantToLogOut] = useState<number>(0);
   const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean }>({
-    1: false,
+    1: true,
     2: false,
     3: false,
   });
@@ -27,13 +27,13 @@ const Personal = () => {
     );
   }
 
-  const handleLogout = () => {
+ const handleLogout = () => {
     if (wantToLogOut === 1) {
       window.localStorage.clear();
       window.sessionStorage.clear();
       window.location.href = "/";
     }
-  };
+};
 
   return (
     <>
@@ -48,7 +48,8 @@ const Personal = () => {
           <div className={personalStyle["all-about-todos"]}>
             <div
               onClick={() => {
-                setActive({ ...active, 1: !active[1], 2: false, 3: false });
+                
+                setActive({ ...active, 1: true, 2: false, 3: false });
               }}
               style={
                 active[1]

@@ -2,23 +2,35 @@ import homeStyles from "./home.module.css";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
-
   const whoIsLoggedIn = window.localStorage.getItem("username");
-  const conditionOfLoggedIn = whoIsLoggedIn?.trim().length !==0 && whoIsLoggedIn !== null;
-  
+  const conditionOfLoggedIn =
+    whoIsLoggedIn?.trim().length !== 0 && whoIsLoggedIn !== null;
+
   sessionStorage.clear();
 
-  /* MUST USE SESSION STORAGE TO TRACK IF THE USER CLOSED THE TAB WHEN StayLOGGEDIN was left unchecked*/
-  
+  const handleLogout = () => {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.location.href = "/";
+  };
+
   return (
     <>
       <div className={homeStyles["home-wrapper"]}>
         <nav className={homeStyles["navigation"]}>
-          
-
           <div className={homeStyles["log-in"]}>
-            <Link to={conditionOfLoggedIn ? `/account/${whoIsLoggedIn}`:"/account/login"}>
-              <h3>{conditionOfLoggedIn ? `Logged In As ${whoIsLoggedIn}`:`LOG IN`}</h3>
+            <Link
+              to={
+                conditionOfLoggedIn
+                  ? `/account/${whoIsLoggedIn}`
+                  : "/account/login"
+              }
+            >
+              <h3>
+                {conditionOfLoggedIn
+                  ? `Logged In As ${whoIsLoggedIn}`
+                  : `LOG IN`}
+              </h3>
             </Link>
           </div>
 
@@ -28,10 +40,13 @@ export const Home = () => {
 
           <div className={homeStyles["sign-up"]}>
             <Link to={"/account/signup"}>
-              <h3>SIGN UP</h3>
+              {conditionOfLoggedIn ? (
+                <h3 onClick={handleLogout}>LOG OUT</h3>
+              ) : (
+                `SIGN UP`
+              )}
             </Link>
           </div>
-
         </nav>
 
         <div className={homeStyles["middle-section"]}>
@@ -42,18 +57,17 @@ export const Home = () => {
 
           <div className={homeStyles["what-to-do"]}>
             <div>
-             
-            <img src="/add-task-icon.svg" height={48} width={48}/>
+              <img src="/add-task-icon.svg" height={48} width={48} />
               <p>Add</p>
             </div>
 
             <div>
-            <img src="/check-icon.svg"  height={48} width={48}/>
+              <img src="/check-icon.svg" height={48} width={48} />
               <p>Complete</p>
             </div>
 
             <div>
-              <img src="/repeat.svg" height={48} width={48}/>
+              <img src="/repeat.svg" height={48} width={48} />
               <p>Repeat</p>
             </div>
           </div>

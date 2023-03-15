@@ -17,6 +17,30 @@ const db = mariadb.createPool({
 server.use(cors());
 server.use(express.json());
 
+server.put("/api/put/todos/change", async(req, res) => {
+    try{
+      const ID = req.body.ID;
+      const title = req.body.title;
+      const category = req.body.category;
+      const checked = req.body.checked === 1 ? true : false;
+
+      const connection = await db.getConnection();
+      connection.query(`
+       UPDATE todos SET checked=?, title=?, category=? WHERE id=?
+      `, [checked, title, category, ID]).then(() => {
+        res.send("Updated")
+      }).catch(err => {
+        console.log(err);
+      });
+
+
+      connection.release();
+    }catch(error){
+      console.log(error)
+    }
+
+})
+
 server.get("/api/get/todos", async (req, res) => {
   try {
     const username = req.query.username;

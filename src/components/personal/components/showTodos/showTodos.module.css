@@ -1,23 +1,27 @@
 .todos-wrapper {
   width: 100%;
-  display: grid;
+  display: flex;
   font-family: "Montserrat", "sans-serif";
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   margin-top: 2rem;
-  place-items: center;
-  justify-self: center;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  
+  gap: 3rem;
   padding: 20px;
 }
 
 .todo {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: fit;
+  flex-direction: row;
+  width: 100%;
   color: #807ea1;
   height: fit-content;
+  flex-wrap: wrap;
   text-align: center;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
   border-radius: 7px;
   background-color: #d7d7d7;
@@ -38,7 +42,9 @@
 }
 
 .title{
-  padding: 10px;
+  width: 20rem;
+
+  
 }
 
 
@@ -57,6 +63,19 @@
   justify-content: center;
   align-items: center; 
   cursor: pointer;
+}
+
+.edit h2{
+  border-radius: 7px;
+  border: 2px solid #745d9f;
+  padding: 2px;
+  margin: 10px;
+}
+
+.edit-pencil{
+  display: flex;
+  flex-direction: row;
+
 }
 
 
