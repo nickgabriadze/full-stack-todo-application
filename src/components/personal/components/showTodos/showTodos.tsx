@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import retrieveTodos, { changeTodo } from "./api";
+import retrieveTodos, { changeTodo, deleteTodo } from "./api";
 import showTodosStyle from "./showTodos.module.css";
 import { getTimeDifference } from "./timeDiff";
 
@@ -24,6 +24,8 @@ export const ShowTodos = ({ forUser }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<string>("");
+  const [actionUndone, setActionUndon] = useState<number>(0);
+
   const [edit, setEdit] = useState<{ editID: number; edit: boolean }>({
     editID: -1,
     edit: false,
@@ -170,6 +172,7 @@ export const ShowTodos = ({ forUser }: any) => {
                   </h2>
                 ) : (
                   <>
+              
                   <h2
                    onClick={() => {
                    
@@ -185,13 +188,25 @@ export const ShowTodos = ({ forUser }: any) => {
                   >
                     {isLoading ? "Loading...": 'Update'}
                   </h2>
+                  <h2
+                  onClick={() => {
+                   deleteTodo(edit.editID);
+                  }}
+                  
+                  >
+                    DELETE
+
+                  </h2>
                   <h2 
-                   onClick={() =>
+                   onClick={() =>{
                     setEdit({
                       ...edit,
                       editID: -1,
                       edit: false,
                     })
+
+                    setActionUndon(0)
+                  }
                   }>Cancel</h2>
                   </>
                 )}

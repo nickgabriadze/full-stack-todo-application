@@ -17,29 +17,48 @@ const db = mariadb.createPool({
 server.use(cors());
 server.use(express.json());
 
-server.put("/api/put/todos/change", async(req, res) => {
-    try{
-      const ID = req.body.ID;
-      const title = req.body.title;
-      const category = req.body.category;
-      const checked = req.body.checked === 1 ? true : false;
+server.delete("/api/delete/todo", async (req, res) => {
+  try{
+  const todoToDelete = req.body.ID;
 
-      const connection = await db.getConnection();
-      connection.query(`
+  const connection = await db.getConnection();
+
+  connection.query("DELETE FROM todos WHERE id =?", [todoToDelete]);
+
+
+  connection.release();
+  }catch(err){
+    console.log(err);
+  }
+});
+
+server.put("/api/put/todos/change", async (req, res) => {
+  try {
+    const ID = req.body.ID;
+    const title = req.body.title;
+    const category = req.body.category;
+    const checked = req.body.checked === 1 ? true : false;
+
+    const connection = await db.getConnection();
+    connection
+      .query(
+        `
        UPDATE todos SET checked=?, title=?, category=? WHERE id=?
-      `, [checked, title, category, ID]).then(() => {
-        res.send("Updated")
-      }).catch(err => {
+      `,
+        [checked, title, category, ID]
+      )
+      .then(() => {
+        res.send("Updated");
+      })
+      .catch((err) => {
         console.log(err);
       });
 
-
-      connection.release();
-    }catch(error){
-      console.log(error)
-    }
-
-})
+    connection.release();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 server.get("/api/get/todos", async (req, res) => {
   try {
@@ -48,7 +67,10 @@ server.get("/api/get/todos", async (req, res) => {
     const connection = await db.getConnection();
 
     connection
-      .query("SELECT todos.ID, todos.title, todos.checked, todos.category, todos.date FROM todos WHERE usernameFK =?", [username])
+      .query(
+        "SELECT todos.ID, todos.title, todos.checked, todos.category, todos.date FROM todos WHERE usernameFK =?",
+        [username]
+      )
       .then((result) => {
         res.send(result);
       })
@@ -56,16 +78,13 @@ server.get("/api/get/todos", async (req, res) => {
         console.log(err);
       });
 
-
-      connection.release();
+    connection.release();
   } catch (err) {
     console.log(err);
   }
-
-  
 });
 
-server.post("/api/create/todo", async (req, res) => {
+server.post("/api/post/todo", async (req, res) => {
   const connection = await db.getConnection();
   const title = req.body.title;
   const category = req.body.category;
@@ -80,13 +99,12 @@ server.post("/api/create/todo", async (req, res) => {
     )
     .then((result) => {
       res.sendStatus(result.warningStatus === 0 ? 200 : 500);
-      console.log(result);
     })
     .catch((err) => {
       console.log(err);
     });
 
-    connection.release();
+  connection.release();
 });
 
 server.post("/login", async (req, res) => {
@@ -105,7 +123,7 @@ server.post("/login", async (req, res) => {
       console.log(error);
     });
 
-    connection.release();
+  connection.release();
 });
 
 server.post("/register", async (req, res) => {
@@ -122,8 +140,7 @@ server.post("/register", async (req, res) => {
       res.send(err.name);
     });
 
-
-    connection.release();
+  connection.release();
 });
 
 server.listen(3001, () => {

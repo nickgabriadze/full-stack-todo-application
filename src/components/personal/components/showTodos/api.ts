@@ -1,6 +1,19 @@
 import axios from "axios";
 import { EditTodo } from "./showTodos";
 
+export const deleteTodo = async (id: number) => {
+  try{
+    return axios.delete('http://localhost:3001/api/delete/todo', {
+      data: {
+        ID: id
+      }
+    })
+  }catch(err) {
+    console.log(err);
+  }
+}
+
+
 export const retrieveTodos = async (username: string) => {
   try {
      return axios.get("http://localhost:3001/api/get/todos", {

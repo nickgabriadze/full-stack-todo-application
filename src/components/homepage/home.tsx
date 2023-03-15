@@ -43,7 +43,7 @@ export const Home = () => {
               {conditionOfLoggedIn ? (
                 <h3 onClick={handleLogout}>LOG OUT</h3>
               ) : (
-                `SIGN UP`
+                <h3>SIGN UP</h3>
               )}
             </Link>
           </div>

@@ -16,6 +16,7 @@ export const AddTodos = ({ forUser }: any) => {
 
       const result = await response.data;
       setReceivedData(result);
+    
     } catch (err) {
     } finally {
       setIsLoading(false);

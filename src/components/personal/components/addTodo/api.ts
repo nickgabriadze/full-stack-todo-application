@@ -5,7 +5,7 @@ export const createTodo = async (username: string, title: string, category: stri
         let date = new Date();
         date.setUTCHours(date.getUTCHours() + 4);
         const currentDate = date.toISOString().split('T')[0] + " " + date.toISOString().split('T')[1].split('.')[0];
-        console.log(currentDate);
+       
         const checked = false;
         const toBeSent = {
             title: title,
@@ -15,7 +15,7 @@ export const createTodo = async (username: string, title: string, category: stri
             username: username
         }
 
-        return axios.post('http://localhost:3001/api/create/todo', toBeSent)
+        return axios.post('http://localhost:3001/api/post/todo', toBeSent)
 }
 
 

@@ -4,6 +4,7 @@ import personalStyle from "./persona.module.css";
 import AddTodos from "./components/addTodo/addTodos";
 import ShowTodos from "./components/showTodos/showTodos";
 import Head from "../head";
+import FilterTodos from "./components/filterTodos/filter";
 
 const Personal = () => {
   const username = useParams().username;
@@ -109,7 +110,8 @@ const Personal = () => {
 
         <div>
           {(active[1] && <ShowTodos forUser={username} />) ||
-            (active[2] && <AddTodos forUser={username} />)}
+            (active[2] && <AddTodos forUser={username} />) ||
+            (active[3] && <FilterTodos forUser={username}/>)}
         </div>
       </div>
     </>
