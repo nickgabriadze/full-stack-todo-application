@@ -17,15 +17,10 @@ export interface EditTodo {
   category: string;
 }
 
-
-
-
 export const ShowTodos = ({ forUser }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<string>("");
-  const [actionUndone, setActionUndon] = useState<number>(0);
-
   const [edit, setEdit] = useState<{ editID: number; edit: boolean }>({
     editID: -1,
     edit: false,
@@ -38,17 +33,13 @@ export const ShowTodos = ({ forUser }: any) => {
 
   const handleUpdate = async () => {
     setIsLoading(true);
-    try{
-      const response = await changeTodo(edit.editID, editTodo);
-    
-    }catch(e){
-      
-    }finally{
+    try {
+    changeTodo(edit.editID, editTodo);
+    } catch (e) {
+    } finally {
       setIsLoading(false);
     }
-  }
- 
-
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -67,6 +58,8 @@ export const ShowTodos = ({ forUser }: any) => {
       setIsLoading(false);
     }
   }, [forUser, todos]);
+
+  console.log(todos)
 
   if (todos.length === 0) {
     return (
@@ -137,7 +130,9 @@ export const ShowTodos = ({ forUser }: any) => {
                       })
                     }
                   >
-                    <h3>{!editTodo.checked  ? `Mark as complete` : `Undo check`}</h3>
+                    <h3>
+                      {!editTodo.checked ? `Mark as complete` : `Undo check`}
+                    </h3>
                   </div>
                 )}
               </div>
@@ -149,9 +144,9 @@ export const ShowTodos = ({ forUser }: any) => {
 
               <div className={showTodosStyle["edit"]}>
                 {edit.editID !== todo.ID ? (
-                  <h2 className={showTodosStyle["edit-pencil"]}
-                    onClick={() =>
-                      {
+                  <h2
+                    className={showTodosStyle["edit-pencil"]}
+                    onClick={() => {
                       setEdit({
                         ...edit,
                         editID: todo.ID,
@@ -162,55 +157,47 @@ export const ShowTodos = ({ forUser }: any) => {
                         ...editTodo,
                         title: todo.title,
                         category: todo.category,
-                        checked: todo.checked === 0 ? 0: 1
-                      })
-                    }
-                    }
+                        checked: todo.checked === 0 ? 0 : 1,
+                      });
+                    }}
                   >
                     Edit
-                    <img src="/edit-icon.svg" width={30} height={30} /> 
+                    <img src="/edit-icon.svg" width={30} height={30} />
                   </h2>
                 ) : (
                   <>
-              
-                  <h2
-                   onClick={() => {
-                   
-                    handleUpdate();    
-                    setEdit({
-                      ...edit, 
-                      editID: -1,
-                      edit: false
-                    })
-
-                   
-                   }}
-                  >
-                    {isLoading ? "Loading...": 'Update'}
-                  </h2>
-                  <h2
-                  onClick={() => {
-                   deleteTodo(edit.editID);
-                  }}
-                  
-                  >
-                    DELETE
-
-                  </h2>
-                  <h2 
-                   onClick={() =>{
-                    setEdit({
-                      ...edit,
-                      editID: -1,
-                      edit: false,
-                    })
-
-                    setActionUndon(0)
-                  }
-                  }>Cancel</h2>
+                    <h2
+                      onClick={() => {
+                        handleUpdate();
+                        setEdit({
+                          ...edit,
+                          editID: -1,
+                          edit: false,
+                        });
+                      }}
+                    >
+                      {isLoading ? "Loading..." : "Update"}
+                    </h2>
+                    <h2
+                      onClick={() => {
+                        deleteTodo(edit.editID);
+                      }}
+                    >
+                      DELETE
+                    </h2>
+                    <h2
+                      onClick={() => {
+                        setEdit({
+                          ...edit,
+                          editID: -1,
+                          edit: false,
+                        });
+                      }}
+                    >
+                      Cancel
+                    </h2>
                   </>
                 )}
-                
               </div>
             </div>
           );
