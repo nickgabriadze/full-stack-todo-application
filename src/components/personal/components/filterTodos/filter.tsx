@@ -166,7 +166,9 @@ const FilterTodos = ({ forUser }: any) => {
                <div className={filterStyles['filtered-by-completeness']}>
                   {
                     filterByCompleteness(todos, completedFilter).map((eachTodo, index) => {
-                      return(<div key={index} className={filterStyles['each-filtered-by-completeness']}>
+                      return(<div key={index} 
+                      style={completedFilter ? {border:'1px solid green'} : {border: '1px solid red'}}
+                      className={filterStyles['each-filtered-by-completeness']}>
                         <div>
                           <p>Title</p>
                           <h1>{eachTodo.title}</h1>
