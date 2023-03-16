@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import retrieveTodos from "../showTodos/api";
 import filterStyles from "./filter.module.css";
 import { Todo } from "../showTodos/showTodos";
-import { filterByCategory, filterByCompleteness, mapCategories } from "./filterers";
-import { each, is } from "immer/dist/internal";
+import {
+  filterByCategory,
+  filterByCompleteness,
+  mapCategories,
+} from "./filterers";
 import { getTimeDifference } from "../showTodos/timeDiff";
 
 const FilterTodos = ({ forUser }: any) => {
@@ -116,14 +119,30 @@ const FilterTodos = ({ forUser }: any) => {
             <div className={filterStyles["completed-filter"]}>
               {activeFilter.button2 && (
                 <>
-                  <button 
-                  style={completedFilter ? { backgroundColor: "rgb(225, 220, 234)" }
-                  : { backgroundColor: "inherit" }}
-                  onClick={() => {setCompletedFilter(true)}}>Complete</button>
-                  <button 
-                  style={!completedFilter ? { backgroundColor: "rgb(225, 220, 234)" }
-                  : { backgroundColor: "inherit" }}
-                  onClick={() => {setCompletedFilter(false)}}>Incomplete</button>
+                  <button
+                    style={
+                      completedFilter
+                        ? { backgroundColor: "rgb(225, 220, 234)" }
+                        : { backgroundColor: "inherit" }
+                    }
+                    onClick={() => {
+                      setCompletedFilter(true);
+                    }}
+                  >
+                    Complete
+                  </button>
+                  <button
+                    style={
+                      !completedFilter
+                        ? { backgroundColor: "rgb(225, 220, 234)" }
+                        : { backgroundColor: "inherit" }
+                    }
+                    onClick={() => {
+                      setCompletedFilter(false);
+                    }}
+                  >
+                    Incomplete
+                  </button>
                 </>
               )}
             </div>
@@ -162,30 +181,43 @@ const FilterTodos = ({ forUser }: any) => {
                 </div>
               )}
 
-              {activeFilter.button2 && (completedFilter === true || completedFilter === false) && (
-               <div className={filterStyles['filtered-by-completeness']}>
-                  {
-                    filterByCompleteness(todos, completedFilter).map((eachTodo, index) => {
-                      return(<div key={index} 
-                      style={completedFilter ? {border:'1px solid green'} : {border: '1px solid red'}}
-                      className={filterStyles['each-filtered-by-completeness']}>
-                        <div>
-                          <p>Title</p>
-                          <h1>{eachTodo.title}</h1>
-                        </div>
-                        <div>
-                          <p>Category</p>
-                         <h2>{eachTodo.category}</h2>
-                        </div>
-                        <div>
-                          <p>Added</p>
-                          <h4>{getTimeDifference(new Date(eachTodo.date))}</h4>
-                        </div>
-                      </div>)
-                  })
-                }
-               </div>
-              )}
+              {activeFilter.button2 &&
+                (completedFilter === true || completedFilter === false) && (
+                  <div className={filterStyles["filtered-by-completeness"]}>
+                    {filterByCompleteness(todos, completedFilter).map(
+                      (eachTodo, index) => {
+                        return (
+                          <div
+                            key={index}
+                            style={
+                              completedFilter
+                                ? { border: "1px solid green" }
+                                : { border: "1px solid red" }
+                            }
+                            className={
+                              filterStyles["each-filtered-by-completeness"]
+                            }
+                          >
+                            <div>
+                              <p>Title</p>
+                              <h1>{eachTodo.title}</h1>
+                            </div>
+                            <div>
+                              <p>Category</p>
+                              <h2>{eachTodo.category}</h2>
+                            </div>
+                            <div>
+                              <p>Added</p>
+                              <h4>
+                                {getTimeDifference(new Date(eachTodo.date))}
+                              </h4>
+                            </div>
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                )}
             </div>
           </div>
         </div>
