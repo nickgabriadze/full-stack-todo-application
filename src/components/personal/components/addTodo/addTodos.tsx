@@ -6,17 +6,18 @@ import createTodo from "./api";
 export const AddTodos = ({ forUser }: any) => {
   const [title, setTitle] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [receivedData, setReceivedData] = useState<string>("");
+  const [receivedData, setReceivedData] = useState<any>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updateInfo, setUpdateInfo] = useState<string>("");
   const sendTodo = async () => {
+    
     setIsLoading(true);
     try {
       const response = await createTodo(forUser, title, category);
+      
 
-      const result = await response.data;
-      setReceivedData(result);
-    
+      setReceivedData(response);
+      setUpdateInfo("Task added successfully");
     } catch (err) {
     } finally {
       setIsLoading(false);
@@ -24,11 +25,11 @@ export const AddTodos = ({ forUser }: any) => {
   };
 
   useEffect(() => {
-    if (receivedData === "OK") {
-      setUpdateInfo("Task added successfully");
+    
       setTitle("");
       setCategory("");
-    }
+
+
   }, [receivedData]);
   return (
     <>

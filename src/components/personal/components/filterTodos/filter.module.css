@@ -1,0 +1,56 @@
+.filter-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.filter-based-on{
+    color:#807ea1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.filter-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.filter-buttons button{
+    outline-color: transparent;
+    border: none;
+    background-color: inherit;
+    color:#807ea1;
+    border-radius: 8px;
+    border:1px solid #807ea1;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filter-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filter-options button{
+    outline-color: transparent;
+    border: none;
+    background-color: inherit;
+    color:#807ea1;
+    border-radius: 20px;
+    border:1px solid #807ea1;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+

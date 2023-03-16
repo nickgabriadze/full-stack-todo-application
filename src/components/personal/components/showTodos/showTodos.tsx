@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import retrieveTodos, { changeTodo, deleteTodo } from "./api";
 import showTodosStyle from "./showTodos.module.css";
 import { getTimeDifference } from "./timeDiff";
@@ -21,6 +21,8 @@ export const ShowTodos = ({ forUser }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<string>("");
+  const [updated, setUpdated] = useState<boolean>(false);
+  const [deleted, setDeleted] = useState<boolean>(false);
   const [edit, setEdit] = useState<{ editID: number; edit: boolean }>({
     editID: -1,
     edit: false,
@@ -31,19 +33,35 @@ export const ShowTodos = ({ forUser }: any) => {
     category: "",
   });
 
+
+  const handleDelete = async() => {
+      setIsLoading(true);
+      setDeleted(false);
+      try{
+        deleteTodo(edit.editID);
+      }catch(e){
+
+      }finally{
+        setIsLoading(false);
+        setDeleted(true);
+      }
+  }
+
   const handleUpdate = async () => {
     setIsLoading(true);
+    setUpdated(false);
     try {
     changeTodo(edit.editID, editTodo);
     } catch (e) {
     } finally {
       setIsLoading(false);
+      setUpdated(true);
     }
   };
 
   useEffect(() => {
     setIsLoading(true);
-
+   
     try {
       retrieveTodos(forUser)
         .then((res: any) => {
@@ -56,10 +74,13 @@ export const ShowTodos = ({ forUser }: any) => {
       console.log(e);
     } finally {
       setIsLoading(false);
+      setUpdated(false);
+      setDeleted(false)
     }
-  }, [forUser, todos]);
+  
+  }, [forUser, updated, deleted]);
 
-  console.log(todos)
+    
 
   if (todos.length === 0) {
     return (
@@ -174,13 +195,14 @@ export const ShowTodos = ({ forUser }: any) => {
                           editID: -1,
                           edit: false,
                         });
+                       
                       }}
                     >
                       {isLoading ? "Loading..." : "Update"}
                     </h2>
                     <h2
                       onClick={() => {
-                        deleteTodo(edit.editID);
+                        handleDelete()
                       }}
                     >
                       DELETE
