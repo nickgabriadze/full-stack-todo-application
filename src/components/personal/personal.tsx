@@ -10,9 +10,9 @@ const Personal = () => {
   const username = useParams().username;
   const [wantToLogOut, setWantToLogOut] = useState<number>(0);
   const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean }>({
-    1: false,
+    1: true,
     2: false,
-    3: true,
+    3: false,
   });
 
   if (
