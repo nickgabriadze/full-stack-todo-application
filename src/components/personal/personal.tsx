@@ -1,19 +1,44 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import personalStyle from "./persona.module.css";
 import AddTodos from "./components/addTodo/addTodos";
 import ShowTodos from "./components/showTodos/showTodos";
 import Head from "../head";
 import FilterTodos from "./components/filterTodos/filter";
 
+interface Advice{
+  slip: {
+    id: number, 
+    advice: string
+  }
+}
+
 const Personal = () => {
   const username = useParams().username;
+
+  const [advice, setAdvice] = useState<Advice>();
   const [wantToLogOut, setWantToLogOut] = useState<number>(0);
   const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean }>({
     1: true,
     2: false,
     3: false,
-  });
+  }); 
+
+
+  const handleAdvices = async() => {
+      try{
+          const response = await fetch(`https://api.adviceslip.com/advice`);
+          const data:Advice = await response.json();
+          setAdvice(data);
+      }catch(err){
+        
+      }
+  }
+
+  useEffect(() => {
+      handleAdvices();
+
+  },[])
 
   if (
     localStorage.getItem("username") !== username && sessionStorage.getItem("username") !== username
@@ -43,7 +68,7 @@ const Personal = () => {
         <nav>
           <div className={personalStyle["welcome-user"]}>
             <h1>{`Hey ${username}`}</h1>
-            <p>Staying neat is a key!</p>
+            <p>{advice?.slip.advice}</p>
           </div>
 
           <div className={personalStyle["all-about-todos"]}>
