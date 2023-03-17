@@ -18,10 +18,11 @@ const Personal = () => {
 
   const [advice, setAdvice] = useState<Advice>();
   const [wantToLogOut, setWantToLogOut] = useState<number>(0);
-  const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean }>({
+  const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean, 4:boolean }>({
     1: true,
     2: false,
     3: false,
+    4: false
   }); 
 
 
@@ -116,6 +117,19 @@ const Personal = () => {
               tabIndex={1}
             >
               <h1>Filter Todos</h1>
+            </div>
+
+            <div
+            onClick={() => {
+              setActive({ ...active, 1: false, 2: false, 3: false, 4: true });
+            }}
+            style={
+              active[4]
+                ? { backgroundColor: "#e1dcea" }
+                : { backgroundColor: "inherit" }
+            }
+            >
+              <h1>Settings</h1>
             </div>
             <div
               onClick={() => {

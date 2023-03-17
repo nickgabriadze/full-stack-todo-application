@@ -30,7 +30,9 @@
 }
 .welcome-user p {
   font-size: 1rem;
-  text-align: center;
+  word-wrap:break-word;
+  word-break: keep-all;
+  width: 200px;
 }
 
 .all-about-todos {
