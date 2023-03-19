@@ -76,10 +76,12 @@ export const Home = () => {
 
         <footer>
           <div className={homeStyles["message"]}>
-            <h4>
+            {!conditionOfLoggedIn ? <h4>
               Please SIGN UP or LOG IN in order to be able to use the service to
               its fullest capacity
             </h4>
+            : ""
+          }
           </div>
         </footer>
       </div>
