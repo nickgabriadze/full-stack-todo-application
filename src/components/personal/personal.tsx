@@ -78,7 +78,7 @@ const Personal = () => {
           <div className={personalStyle["all-about-todos"]}>
             <div
               onClick={() => {
-                setActive({ ...active, 1: true, 2: false, 3: false });
+                setActive({ ...active, 1: true, 2: false, 3: false, 4:false });
               }}
               style={
                 active[1]
@@ -93,7 +93,7 @@ const Personal = () => {
 
             <div
               onClick={() => {
-                setActive({ ...active, 1: false, 2: true, 3: false });
+                setActive({ ...active, 1: false, 2: true, 3: false, 4:false });
               }}
               style={
                 active[2]
@@ -108,7 +108,7 @@ const Personal = () => {
 
             <div
               onClick={() => {
-                setActive({ ...active, 1: false, 2: false, 3: true });
+                setActive({ ...active, 1: false, 2: false, 3: true, 4:false });
               }}
               style={
                 active[3]

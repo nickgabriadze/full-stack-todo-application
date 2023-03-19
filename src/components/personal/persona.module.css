@@ -11,6 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   color: #b5a9cc;
   padding: 20px;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=9, Direction=0, Color=#807EA1)"; /*IE 8*/
@@ -22,7 +23,6 @@
 
 .welcome-user {
   font-size: clamp(2rem, 2.5vh, 3rem);
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,7 +32,7 @@
   font-size: 1rem;
   word-wrap:break-word;
   word-break: keep-all;
-  width: 200px;
+  width: 300px;
 }
 
 .all-about-todos {
@@ -41,6 +41,8 @@
   align-items: center;
   flex-direction: row;
   text-align: center;
+  flex-wrap: wrap;
+  padding: 50px;
   gap: clamp(2rem, 2.5vh, 10rem);
 }
 .all-about-todos div {
@@ -78,4 +80,20 @@
   align-items: center;
   min-height: 100vh;
   color:#807EA1;
+}
+
+@media only screen and (max-width: 500px) {
+  .personal-wrapper nav{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .welcome-user p{
+    margin-top: 10px;
+    width: fit-content;
+    text-align: center;
+  }
+  
 }
