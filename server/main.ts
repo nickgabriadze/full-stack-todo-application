@@ -18,16 +18,15 @@ server.use(cors());
 server.use(express.json());
 
 server.delete("/api/delete/todo", async (req, res) => {
-  try{
-  const todoToDelete = req.body.ID;
+  try {
+    const todoToDelete = req.body.ID;
 
-  const connection = await db.getConnection();
+    const connection = await db.getConnection();
 
-  connection.query("DELETE FROM todos WHERE id =?", [todoToDelete]);
+    connection.query("DELETE FROM todos WHERE id =?", [todoToDelete]);
 
-
-  connection.release();
-  }catch(err){
+    connection.release();
+  } catch (err) {
     console.log(err);
   }
 });
@@ -102,6 +101,42 @@ server.post("/api/post/todo", async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+
+  connection.release();
+});
+
+server.put("/api/put/username", async (req, res) => {
+  const newUsername = req.body.newUsername;
+  const oldUsername = req.body.oldUsername;
+  const connection = await db.getConnection();
+
+  connection
+    .query(
+      `UPDATE users SET username=? WHERE username=?`,
+    [newUsername, oldUsername]
+    )
+    .then((result) => {
+      res.send(result?.affectedRows === 1 ? "Updated" : "Couldn't Update");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  connection.release();
+});
+
+server.get("/api/get/username/", async (req, res) => {
+  const usernameToCheck = req.query.username;
+  const connection = await db.getConnection();
+
+  connection
+    .query("SELECT checkAvailability(?) as available", [usernameToCheck])
+    .then((result) => {
+      res.send(result[0]);
+    })
+    .catch((err) => {
+      res.send(err);
     });
 
   connection.release();

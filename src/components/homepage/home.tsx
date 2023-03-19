@@ -1,18 +1,19 @@
 import homeStyles from "./home.module.css";
 import { Link } from "react-router-dom";
 
+
+export const handleLogout = () => {
+  window.localStorage.clear();
+  window.sessionStorage.clear();
+  window.location.href = "/";
+};
+
 export const Home = () => {
   const whoIsLoggedIn = window.localStorage.getItem("username");
   const conditionOfLoggedIn =
     whoIsLoggedIn?.trim().length !== 0 && whoIsLoggedIn !== null;
 
   sessionStorage.clear();
-
-  const handleLogout = () => {
-    window.localStorage.clear();
-    window.sessionStorage.clear();
-    window.location.href = "/";
-  };
 
   return (
     <>

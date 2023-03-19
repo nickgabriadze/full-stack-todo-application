@@ -1,0 +1,100 @@
+.settings-wrapper {
+  background-color: rgb(0, 0, 0);
+  height: fit-content;
+  color: #b5a9cc;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 50px;
+ 
+  
+}
+
+.settings-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+
+.changing-area{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.what-to-change {
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  gap: 1rem;
+}
+
+.username,
+.password, .preferences{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  cursor: pointer;
+  background-color: black;
+  gap: 2rem;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(121, 110, 110);
+  
+}
+
+.username:hover, .password:hover, .preferences:hover {
+
+    border: 1px solid #b5a9cc;
+
+    color:#f4f4f4
+}
+
+
+.straight-line-hr{
+    border:1px solid #633cab;
+    border-radius: 10px;
+
+}
+
+.username-settings{
+  width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  font-size: 1rem;
+  gap: 20px;
+}
+
+.username-settings input{
+  background-color: inherit;
+  border: 1px solid #633cab;
+  border-radius: 10px;
+  font-size: 2rem;
+  color:#b5a9cc;
+ 
+  padding: 10px;
+}
+
+.username-settings button{
+  color:#633cab;
+  background-color: inherit;
+  border: 1px solid #633cab;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.username-settings button:hover{
+  background-color: #533c7d;
+  color: white;
+}
+.username-settings p{
+  width: 26rem;
+  text-align: center;
+}

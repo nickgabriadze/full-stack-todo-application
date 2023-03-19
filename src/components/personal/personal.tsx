@@ -5,12 +5,13 @@ import AddTodos from "./components/addTodo/addTodos";
 import ShowTodos from "./components/showTodos/showTodos";
 import Head from "../head";
 import FilterTodos from "./components/filterTodos/filter";
+import Settings from "./components/settings/settings";
 
-interface Advice{
+interface Advice {
   slip: {
-    id: number, 
-    advice: string
-  }
+    id: number;
+    advice: string;
+  };
 }
 
 const Personal = () => {
@@ -18,32 +19,34 @@ const Personal = () => {
 
   const [advice, setAdvice] = useState<Advice>();
   const [wantToLogOut, setWantToLogOut] = useState<number>(0);
-  const [active, setActive] = useState<{ 1: boolean; 2: boolean; 3: boolean, 4:boolean }>({
+  const [active, setActive] = useState<{
+    1: boolean;
+    2: boolean;
+    3: boolean;
+    4: boolean;
+  }>({
     1: true,
     2: false,
     3: false,
-    4: false
-  }); 
+    4: false,
+  });
 
-
-  const handleAdvices = async() => {
-      try{
-          const response = await fetch(`https://api.adviceslip.com/advice`);
-          const data:Advice = await response.json();
-          setAdvice(data);
-      }catch(err){
-        
-      }
-  }
+  const handleAdvices = async () => {
+    try {
+      const response = await fetch(`https://api.adviceslip.com/advice`);
+      const data: Advice = await response.json();
+      setAdvice(data);
+    } catch (err) {}
+  };
 
   useEffect(() => {
-      handleAdvices();
-
-  },[])
+    handleAdvices();
+  }, []);
 
   if (
-    localStorage.getItem("username") !== username && sessionStorage.getItem("username") !== username
-  ){
+    localStorage.getItem("username") !== username &&
+    sessionStorage.getItem("username") !== username
+  ) {
     return (
       <>
         <Head title={`${username} not found`} />
@@ -54,13 +57,13 @@ const Personal = () => {
     );
   }
 
- const handleLogout = () => {
+  const handleLogout = () => {
     if (wantToLogOut === 1) {
       window.localStorage.clear();
       window.sessionStorage.clear();
       window.location.href = "/";
     }
-};
+  };
 
   return (
     <>
@@ -75,7 +78,6 @@ const Personal = () => {
           <div className={personalStyle["all-about-todos"]}>
             <div
               onClick={() => {
-                
                 setActive({ ...active, 1: true, 2: false, 3: false });
               }}
               style={
@@ -120,14 +122,14 @@ const Personal = () => {
             </div>
 
             <div
-            onClick={() => {
-              setActive({ ...active, 1: false, 2: false, 3: false, 4: true });
-            }}
-            style={
-              active[4]
-                ? { backgroundColor: "#e1dcea" }
-                : { backgroundColor: "inherit" }
-            }
+              onClick={() => {
+                setActive({ ...active, 1: false, 2: false, 3: false, 4: true });
+              }}
+              style={
+                active[4]
+                  ? { backgroundColor: "#e1dcea" }
+                  : { backgroundColor: "inherit" }
+              }
             >
               <h1>Settings</h1>
             </div>
@@ -150,7 +152,8 @@ const Personal = () => {
         <div>
           {(active[1] && <ShowTodos forUser={username} />) ||
             (active[2] && <AddTodos forUser={username} />) ||
-            (active[3] && <FilterTodos forUser={username}/>)}
+            (active[3] && <FilterTodos forUser={username} />) ||
+            (active[4] && <Settings user={username}/>)}
         </div>
       </div>
     </>
