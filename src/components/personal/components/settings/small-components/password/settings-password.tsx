@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import settingsStyles from "../settings.module.css";
+import settingsStyles from "../../settings.module.css";
 import checkUopdatedPass from "./checkUpdatedPass";
-import { changePassword, checkCurrentPass } from "./api";
-import { handleLogout } from "../../../../homepage/home";
+import { changePassword, checkCurrentPass } from "../api";
+import { handleLogout } from "../../../../../homepage/home";
 
 
 export const PasswordSettings = () => {

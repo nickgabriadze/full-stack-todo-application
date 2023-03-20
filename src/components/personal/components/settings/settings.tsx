@@ -1,6 +1,6 @@
 import { useState } from "react";
 import settingsStyle from "./settings.module.css";
-import PasswordSettings from "./small-components/settings-password";
+import PasswordSettings from "./small-components/password/settings-password";
 import UsernameSettings from "./small-components/settings-username";
 
 interface Settings {
