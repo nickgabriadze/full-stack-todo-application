@@ -51,7 +51,7 @@ export const Login = () => {
       });
 
       const result = response.data;
-
+      
       setReceivedData(result);
     } catch (err) {
       console.log(err);
@@ -71,6 +71,8 @@ export const Login = () => {
       } else {
         setErrorMessageForUser(finalCheck);
       }
+    }else{
+        setErrorMessageForUser("Either the username or the password is invalid");
     }
   }, [receivedData]);
 
@@ -98,6 +100,7 @@ export const Login = () => {
             className={loginStyle["username"]}
             onChange={(e) => setUsername(e.target.value)}
             value={username}
+            onBlur={() => setErrorMessageForUser("")}
             required
           ></input>
           <label className={loginStyle["username-label"]}>Username</label>
@@ -109,6 +112,7 @@ export const Login = () => {
             className={loginStyle["password"]}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            onBlur={() => setErrorMessageForUser("")}
             required
           ></input>
           <label className={loginStyle["password-label"]}>Password</label>

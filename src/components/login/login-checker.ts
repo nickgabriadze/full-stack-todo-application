@@ -15,7 +15,7 @@ export const formChecker = (username: string, password: string):(string|boolean)
 }
 
 export const checkReceivedData = (username:string, receivedData: {username: string}[]) => {
-    console.log(receivedData)
+    
     if(receivedData[0]?.username !== username){
         return "Either the username or the password is invalid"
     }
