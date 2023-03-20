@@ -1,11 +1,17 @@
-export const checkForm = (username: string, password: string, repeated: string):(string|boolean)=> {
+export const checkUopdatedPass = (oldPassword: string, password: string, repeated: string):(string|boolean)=> {
 
-    if(username.trim().length === 0 && password.trim().length === 0) {
+
+    if(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(oldPassword) === false){
+        return "Current password is invalid"
+    }   
+ 
+
+    if(oldPassword.trim().length === 0 && password.trim().length === 0) {
         return "None of the fields should be empty";
     }
 
     if(password !== repeated){
-        return "Passwords don't match";
+        return "New passwords don't match";
     }
 
     let requirements = {
@@ -15,37 +21,48 @@ export const checkForm = (username: string, password: string, repeated: string):
         min8Char: false
     }
 
+
+
     if(/[0-9]/.test(password)){
        requirements = {...requirements, oneNumber: true}
     }else{
-        return "Password should contain at least one digit";
+        return "New password should contain at least one digit";
     }
 
     if(/[A-Z]/.test(password)){
         requirements  = {...requirements, oneUpper: true}
     }else{
-        return "Password should contain at least one upper case letter";
+        return "New password should contain at least one upper case letter";
     }
 
     if(/[!@#$%^&*(),.?":{}|<>]/.test(password)){
         requirements = {...requirements, oneSpecial: true}
     }else{
-        return "Password should contain at least one special letter";
+        return "New password should contain at least one special letter";
     }
 
 
     if(/(?=.{8,})/.test(password)){
         requirements = {...requirements, min8Char: true}
     }else{
-        return "Password should contain at least 8 characters";
+        return "New password should contain at least 8 characters";
     }
     
+
+    if(oldPassword === password){
+        return "Your new password should be different from the current one";
+    }
 
     if(requirements.min8Char && requirements.oneNumber && requirements.oneUpper && requirements.oneSpecial){
         return true;
     }
 
 
+   
+
     return false;
 
 };
+
+
+export default checkUopdatedPass;

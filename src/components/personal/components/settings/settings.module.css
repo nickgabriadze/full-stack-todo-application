@@ -60,7 +60,7 @@
 
 }
 
-.username-settings{
+.username-settings, .password-wrapper{
   width: fit-content;
 
   display: flex;
@@ -77,11 +77,37 @@
   border-radius: 10px;
   font-size: 2rem;
   color:#b5a9cc;
- 
+
+  padding: 10px;
+}
+.outer-wrapper-pswd{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.password-wrapper div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.password-wrapper input {
+  background-color: inherit;
+  border: 1px solid #633cab;
+  border-radius: 10px;
+  font-size: 1rem;
+  color:#b5a9cc;
   padding: 10px;
 }
 
-.username-settings button{
+
+
+.username-settings button, .update-password button{
   color:#633cab;
   background-color: inherit;
   border: 1px solid #633cab;
@@ -90,11 +116,18 @@
   font-size: 1rem;
   cursor: pointer;
 }
-.username-settings button:hover{
+.username-settings button:hover, .update-password button:hover{
   background-color: #533c7d;
   color: white;
 }
 .username-settings p{
   width: 26rem;
   text-align: center;
+}
+
+.errors{
+  text-align: center;
+  width: 15rem;
+  word-wrap:break-word;
+  word-break: keep-all;
 }

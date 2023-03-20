@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mariadb from "mariadb";
@@ -105,6 +105,51 @@ server.post("/api/post/todo", async (req, res) => {
 
   connection.release();
 });
+
+
+server.get("/api/get/password", async(req, res) => {
+    const username = req.query.username;
+    const password = req.query.password;
+    const connection  =  await db.getConnection();
+
+    connection.query("SELECT password FROM users WHERE username=?", [username]).then(
+      (result) => {
+       
+
+        if(result[0].password === password){
+          res.send(true);
+        }else{
+          res.send(false);
+        }
+      }
+    ).catch(err => {
+      console.log(err);
+    })
+
+
+    connection.release();
+})
+
+
+server.put("/api/put/password", async(req, res) => {
+    const username = req.body.username;
+    const newPassword = req.body.newPassword;
+    const connection = await db.getConnection();
+
+    connection.query("UPDATE users SET password = ? WHERE username=?", [newPassword, username]).
+    then((result) => {
+
+      if(result.affectedRows === 1){
+        res.send(true)
+      }else{
+        res.send(false);
+      }
+
+    }).catch(err => {
+      console.log(err);
+    })
+
+})
 
 server.put("/api/put/username", async (req, res) => {
   const newUsername = req.body.newUsername;

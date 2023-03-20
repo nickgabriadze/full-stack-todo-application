@@ -6,7 +6,6 @@ import { sha256 } from "js-sha256";
 import formChecker, { checkReceivedData } from "./login-checker";
 import { useAppDispatch } from "../../store/hooks";
 import {
-  setStayLoggedIn,
   setTodoerUsername,
 } from "../../store/slices/userSlice";
 import { stayLoggedIn } from "../../utils/manageActive";
@@ -67,7 +66,6 @@ export const Login = () => {
       if (finalCheck === true) {
         stayLoggedIn(username, stayLoggedInColor);
         dispatch(setTodoerUsername(username));
-        dispatch(setStayLoggedIn(stayLoggedInColor));
         setPopUp(true);
         handleRoutingAfterLogIn();
       } else {

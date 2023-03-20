@@ -1,5 +1,6 @@
 import { useState } from "react";
 import settingsStyle from "./settings.module.css";
+import PasswordSettings from "./small-components/settings-password";
 import UsernameSettings from "./small-components/settings-username";
 
 interface Settings {
@@ -83,6 +84,7 @@ export const Settings = () => {
 
           <div className={settingsStyle["changing-area"]}>
             {options.username && <UsernameSettings/>}
+            {options.password && <PasswordSettings/>}
           </div>
         </div>
       </div>
