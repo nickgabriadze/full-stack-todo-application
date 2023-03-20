@@ -165,3 +165,40 @@
     opacity: 100%;
   }
 }
+
+.delete-account{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+.delete-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #633cab;
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.delete-box:hover{
+  border: 1px solid #b5a9cc
+}
+
+.delete-box button{
+  font-size: 2rem;
+  background-color: inherit;
+  color: #b5a9cc;
+  outline-color: transparent;
+  border: none;
+  
+}
+
+.delete-box button:hover{
+  color: white;
+  cursor: pointer;
+}

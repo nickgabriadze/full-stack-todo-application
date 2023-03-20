@@ -23,10 +23,15 @@ export const checkCurrentPass = async (username: string, password: string) => {
   });
 };
 
-
 export const changePassword = async (username: string, newPassword: string) => {
   return axios.put("http://localhost:3001/api/put/password", {
     username: username,
-    newPassword: sha256(newPassword)
-  })
-}
+    newPassword: sha256(newPassword),
+  });
+};
+
+export const deleteAccount = async (username: string) => {
+  return axios.delete("http://localhost:3001/api/delete/account", {
+    data: { username: username },
+  });
+};

@@ -1,6 +1,6 @@
 export const checkForm = (username: string, password: string, repeated: string):(string|boolean)=> {
 
-    if(username.trim().length === 0 && password.trim().length === 0) {
+    if(username.trim().length === 0 || password.trim().length === 0) {
         return "None of the fields should be empty";
     }
 

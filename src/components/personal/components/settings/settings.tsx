@@ -1,5 +1,6 @@
 import { useState } from "react";
 import settingsStyle from "./settings.module.css";
+import AccountSettings from "./small-components/account";
 import PasswordSettings from "./small-components/password/settings-password";
 import { PreferencesSettings } from "./small-components/preferences";
 import UsernameSettings from "./small-components/settings-username";
@@ -112,6 +113,7 @@ export const Settings = () => {
             {options.username && <UsernameSettings/>}
             {options.password && <PasswordSettings/>}
             {options.preferences && <PreferencesSettings/>}
+            {options.account && <AccountSettings/>}
           </div>
         </div>
       </div>

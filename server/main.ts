@@ -17,6 +17,28 @@ const db = mariadb.createPool({
 server.use(cors());
 server.use(express.json());
 
+
+server.delete("/api/delete/account", async(req, res) => {
+    try{
+      const usernameToDelete = req.body.username;
+      const connection = await db.getConnection();
+
+      connection.query("DELETE FROM users WHERE username =?", [usernameToDelete]).then(
+        (response) => {
+          if(response.affectedRows === 1){
+            res.sendStatus(200)
+          }else{
+            res.sendStatus(404);
+          }
+        }
+      )
+      
+      connection.release();
+    }catch(err) {
+      console.log(err);
+    }
+})
+
 server.delete("/api/delete/todo", async (req, res) => {
   try {
     const todoToDelete = req.body.ID;

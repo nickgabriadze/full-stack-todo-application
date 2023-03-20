@@ -8,7 +8,7 @@ import { checkForm } from "./signup-checker";
 
 const responseDict: { [key: string]: string } = {
   success:
-    "Hey, thanks for signing up! now you will be redirected to sign in page",
+    "Hey, thanks for signing up! now you will be redirected to log in page",
   SqlError: "Sorry, the username you are trying to register is not available",
 };
 
