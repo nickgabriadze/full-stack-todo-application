@@ -149,6 +149,8 @@ server.put("/api/put/password", async(req, res) => {
       console.log(err);
     })
 
+    connection.release();
+
 })
 
 server.put("/api/put/username", async (req, res) => {
