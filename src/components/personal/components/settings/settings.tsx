@@ -8,6 +8,7 @@ interface Settings {
   username: boolean;
   password: boolean;
   preferences: boolean;
+  account: boolean
 }
 
 export const Settings = () => {
@@ -15,6 +16,7 @@ export const Settings = () => {
     username: true,
     password: false,
     preferences: false,
+    account: false
   });
 
 
@@ -35,6 +37,7 @@ export const Settings = () => {
                   username: true,
                   password: false,
                   preferences: false,
+                  account: false
                 });
               }}
             >
@@ -54,6 +57,7 @@ export const Settings = () => {
                   username: false,
                   password: true,
                   preferences: false,
+                  account: false
                 });
               }}
             >
@@ -73,11 +77,32 @@ export const Settings = () => {
                   username: false,
                   password: false,
                   preferences: true,
+                  account: false
                 });
               }}
             >
               <img src={"/preferences-icon.svg"}></img>
               <h3>Preferences</h3>
+            </div>
+
+            <div
+              className={settingsStyle["account"]}
+              style={{
+                backgroundColor: options.account ? "#633cab" : "inherit",
+                color: options.account ? "white" : "inherit",
+              }}
+              onClick={() => {
+                setOptions({
+                  ...options,
+                  username: false,
+                  password: false,
+                  preferences: false,
+                  account: true
+                });
+              }}
+            >
+              <img src={"/account-icon.svg"}></img>
+              <h3>Account</h3>
             </div>
           </div>
 
